@@ -338,4 +338,3 @@ module.exports = {
   getAllUsers,
   deleteAnyUser,
 };
-
