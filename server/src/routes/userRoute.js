@@ -11,11 +11,17 @@ const {
 } = require("../controllers/userController");
 
 const { authentication, authorization } = require("../middlewares/auth");
+const upload = require("../config/multer");
 
-router.post("/signup", signup);
+router.post("/signup", upload.single("profileImage"), signup);
 router.post("/login", login);
 router.get("/my-profile", authentication, getMyProfile);
-router.put("/update", authentication, updateProfile);
+router.put(
+  "/update",
+  authentication,
+  upload.single("profileImage"),
+  updateProfile,
+);
 router.delete("/delete", authentication, deleteProfile);
 
 // Admin Routes

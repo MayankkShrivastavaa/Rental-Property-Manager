@@ -88,6 +88,11 @@ const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     userData.password = hashedPassword;
 
+    // Profile Image
+    if (req.file) {
+      userData.profileImage = req.file.filename;
+    }
+
     const user = await UserModel.create(userData);
 
     return res.status(201).json({ msg: "Signup Successfull", user });
@@ -246,6 +251,11 @@ const updateProfile = async (req, res) => {
           .status(400)
           .json({ msg: "Bio Cannot be less than 15 Characters." });
       }
+    }
+
+    // Profile Image
+    if (req.file) {
+      userData.profileImage = req.file.filename;
     }
 
     let updatedUserProfile = await UserModel.findByIdAndUpdate(
